@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyCsPlugin": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
