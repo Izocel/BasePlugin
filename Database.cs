@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `raceinformation` (
                 new { steamid = player.SteamID });
         }
 
-        public WarcraftPlayer LoadClientFromDatabase(CCSPlayerController player, XpSystem xpSystem)
+        public MyPlayer LoadClientFromDatabase(CCSPlayerController player, XpSystem xpSystem)
         {
             var dbPlayer = _connection.QueryFirstOrDefault<DatabasePlayer>(@"
             SELECT * FROM `players` WHERE `steamid` = @steamid",
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `raceinformation` (
             SELECT * from `raceinformation` where `steamid` = @steamid AND `racename` = @racename",
                 new { steamid = player.SteamID, racename = dbPlayer.CurrentRace });
 
-            var wcPlayer = new WarcraftPlayer(player);
+            var wcPlayer = new MyPlayer(player);
             wcPlayer.LoadFromDatabase(raceInformation, xpSystem);
             MyCsPlugin.Instance.SetWcPlayer(player, wcPlayer);
 

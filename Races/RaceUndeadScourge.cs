@@ -24,7 +24,7 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace MyCsPlugin.Races
 {
-    public class RaceUndeadScourge : WarcraftRace
+    public class RaceUndeadScourge : MyRace
     {
         private Timer _beepTimer;
         public override string InternalName => "undead_scourge";
@@ -32,13 +32,13 @@ namespace MyCsPlugin.Races
 
         public override void Register()
         {
-            AddAbility(new SimpleWarcraftAbility("vampiric_aura", "Vampiric Aura",
+            AddAbility(new SimpleMyAbility("vampiric_aura", "Vampiric Aura",
                 i => $"Heal for {ChatColors.Green}10/20/30/40/50%{ChatColors.Default} of damage dealt to enemies."));
-            AddAbility(new SimpleWarcraftAbility("unholy_aura", "Unholy Aura",
+            AddAbility(new SimpleMyAbility("unholy_aura", "Unholy Aura",
                 i => $"Move {ChatColors.Blue}10/20/30/40/50%{ChatColors.Default} faster."));
-            AddAbility(new SimpleWarcraftAbility("levitation", "Levitation",
+            AddAbility(new SimpleMyAbility("levitation", "Levitation",
                 i => $"Experience {ChatColors.LightBlue}90/80/70/60/50%{ChatColors.Default} of gravity."));
-            AddAbility(new SimpleWarcraftAbility("suicide_bomber", "Suicide Bomber",
+            AddAbility(new SimpleMyAbility("suicide_bomber", "Suicide Bomber",
                 i =>
                     $"When you die, you create a {ChatColors.Red}miniature C4{ChatColors.Default} that will detonate after 1.5 seconds."));
 
@@ -64,7 +64,7 @@ namespace MyCsPlugin.Races
             var @event = (EventPlayerHurt)obj;
             var victim = @event.Userid;
 
-            int vampiricAuraLevel = WarcraftPlayer.GetAbilityLevel(0);
+            int vampiricAuraLevel = MyPlayer.GetAbilityLevel(0);
             float lifeStealPercentage = (vampiricAuraLevel * 10.0f) / 100.0f;
 
             int amountToHeal = Convert.ToInt32(@event.DmgHealth * lifeStealPercentage);
@@ -77,7 +77,7 @@ namespace MyCsPlugin.Races
             }
 
             if (victim != null & !string.IsNullOrEmpty(victim.PlayerName) && amountToHeal > 0)
-                WarcraftPlayer.SetStatusMessage($" {ChatColors.Green}+{amountToHeal} HP");
+                MyPlayer.SetStatusMessage($" {ChatColors.Green}+{amountToHeal} HP");
             //Player.PrintToChat($" {ChatColors.Yellow} You just healed {ChatColors.Green}{amountToHeal} health {ChatColors.Yellow}from damaging {victim.Name}.");
 
             Player.PlayerPawn.Value.Health = newHealth;
@@ -86,12 +86,12 @@ namespace MyCsPlugin.Races
         private void PlayerSpawn(GameEvent @event)
         {
             // Handle levitation/low gravity
-            int levitationLevel = WarcraftPlayer.GetAbilityLevel(2);
+            int levitationLevel = MyPlayer.GetAbilityLevel(2);
             float levitationModifier = 1f - (levitationLevel * 0.1f);
             Player.PlayerPawn.Value.GravityScale = levitationModifier;
 
             // Handle unholy aura/speed boost
-            int unholyAuraLevel = WarcraftPlayer.GetAbilityLevel(1);
+            int unholyAuraLevel = MyPlayer.GetAbilityLevel(1);
             float speedModifier = 1.0f + (0.1f * unholyAuraLevel);
             // Player.Speed = speedModifier;
         }
@@ -99,7 +99,7 @@ namespace MyCsPlugin.Races
         private void PlayerDeath(GameEvent @obj)
         {
             var @event = (EventPlayerDeath)obj;
-            if (WarcraftPlayer.GetAbilityLevel(3) > 0 && @event.Userid.Handle != @event.Attacker.Handle)
+            if (MyPlayer.GetAbilityLevel(3) > 0 && @event.Userid.Handle != @event.Attacker.Handle)
             {
                 // var ent = SpawnC4Model();
                 //

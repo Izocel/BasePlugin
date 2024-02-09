@@ -19,9 +19,9 @@ using CounterStrikeSharp.API.Core;
 
 namespace MyCsPlugin.Effects
 {
-    public abstract class WarcraftEffect
+    public abstract class MyEffect
     {
-        protected WarcraftEffect(CCSPlayerController owner, CCSPlayerController target, float duration)
+        protected MyEffect(CCSPlayerController owner, CCSPlayerController target, float duration)
         {
             Owner = owner;
             Target = target;

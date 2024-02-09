@@ -13,9 +13,9 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace MyCsPlugin
 {
-    public static class WarcraftPlayerExtensions
+    public static class MyPlayerExtensions
     {
-        public static WarcraftPlayer GetWarcraftPlayer(this CCSPlayerController player)
+        public static MyPlayer GetMyPlayer(this CCSPlayerController player)
         {
             return MyCsPlugin.Instance.GetWcPlayer(player);
         }
@@ -66,7 +66,7 @@ namespace MyCsPlugin
             }
         }
 
-        public void GrantLevel(WarcraftPlayer wcPlayer)
+        public void GrantLevel(MyPlayer wcPlayer)
         {
             if (wcPlayer.GetLevel() >= MyCsPlugin.MaxLevel) return;
 
@@ -76,7 +76,7 @@ namespace MyCsPlugin
             PerformLevelupEvents(wcPlayer);
         }
 
-        private void PerformLevelupEvents(WarcraftPlayer wcPlayer)
+        private void PerformLevelupEvents(MyPlayer wcPlayer)
         {
             if (GetFreeSkillPoints(wcPlayer) > 0)
                 MyCsPlugin.Instance.ShowSkillPointMenu(wcPlayer);
@@ -89,7 +89,7 @@ namespace MyCsPlugin
             // Sound.EmitSound(wcPlayer.Index, soundToPlay);
         }
 
-        public void RecalculateXpForLevel(WarcraftPlayer wcPlayer)
+        public void RecalculateXpForLevel(MyPlayer wcPlayer)
         {
             if (wcPlayer.currentLevel == MyCsPlugin.MaxLevel)
             {
@@ -100,7 +100,7 @@ namespace MyCsPlugin
             wcPlayer.amountToLevel = GetXpForLevel(wcPlayer.currentLevel);
         }
 
-        public int GetFreeSkillPoints(WarcraftPlayer wcPlayer)
+        public int GetFreeSkillPoints(MyPlayer wcPlayer)
         {
             int totalPointsUsed = 0;
 
@@ -117,7 +117,7 @@ namespace MyCsPlugin
         }
     }
 
-    public class WarcraftPlayer
+    public class MyPlayer
     {
         private int _playerIndex;
         public int Index => _playerIndex;
@@ -135,9 +135,9 @@ namespace MyCsPlugin
         private List<int> _abilityLevels = new List<int>(new int[4]);
         public List<float> AbilityCooldowns = new List<float>(new float[4]);
 
-        private WarcraftRace _race;
+        private MyRace _race;
 
-        public WarcraftPlayer(CCSPlayerController player)
+        public MyPlayer(CCSPlayerController player)
         {
             Player = player;
         }
@@ -155,7 +155,7 @@ namespace MyCsPlugin
             _abilityLevels[3] = dbRace.Ability4Level;
 
             _race = MyCsPlugin.Instance.raceManager.InstantiateRace(raceName);
-            _race.WarcraftPlayer = this;
+            _race.MyPlayer = this;
             _race.Player = Player;
         }
 
@@ -182,7 +182,7 @@ namespace MyCsPlugin
             _abilityLevels[abilityIndex] = value;
         }
 
-        public WarcraftRace GetRace()
+        public MyRace GetRace()
         {
             return _race;
         }
@@ -205,14 +205,14 @@ namespace MyCsPlugin
         private static MyCsPlugin _instance;
         public static MyCsPlugin Instance => _instance;
 
-        public override string ModuleName => "Warcraft";
+        public override string ModuleName => "My";
         public override string ModuleVersion => "0.0.1";
 
         public static int MaxLevel = 16;
         public static int MaxSkillLevel = 5;
         public static int maxUltimateLevel = 5;
 
-        private Dictionary<IntPtr, WarcraftPlayer> WarcraftPlayers = new();
+        private Dictionary<IntPtr, MyPlayer> MyPlayers = new();
         private EventSystem _eventSystem;
         public XpSystem XpSystem;
         public RaceManager raceManager;
@@ -224,16 +224,16 @@ namespace MyCsPlugin
         public float XpHeadshotModifier = 0.25f;
         public float XpKnifeModifier = 0.25f;
 
-        public List<WarcraftPlayer> Players => WarcraftPlayers.Values.ToList();
+        public List<MyPlayer> Players => MyPlayers.Values.ToList();
 
-        public WarcraftPlayer GetWcPlayer(CCSPlayerController player)
+        public MyPlayer GetWcPlayer(CCSPlayerController player)
         {
-            WarcraftPlayers.TryGetValue(player.Handle, out var wcPlayer);
+            MyPlayers.TryGetValue(player.Handle, out var wcPlayer);
             if (wcPlayer == null)
             {
                 if (player.IsValid && !player.IsBot)
                 {
-                    WarcraftPlayers[player.Handle] = _database.LoadClientFromDatabase(player, XpSystem);
+                    MyPlayers[player.Handle] = _database.LoadClientFromDatabase(player, XpSystem);
                 }
                 else
                 {
@@ -241,12 +241,12 @@ namespace MyCsPlugin
                 }
             }
 
-            return WarcraftPlayers[player.Handle];
+            return MyPlayers[player.Handle];
         }
 
-        public void SetWcPlayer(CCSPlayerController player, WarcraftPlayer wcPlayer)
+        public void SetWcPlayer(CCSPlayerController player, MyPlayer wcPlayer)
         {
-            WarcraftPlayers[player.Handle] = wcPlayer;
+            MyPlayers[player.Handle] = wcPlayer;
         }
 
         public override void Load(bool hotReload)
@@ -333,7 +333,7 @@ namespace MyCsPlugin
             // No bots, invalid clients or non-existent clients.
             if (!player.IsValid || player.IsBot) return;
 
-            player.GetWarcraftPlayer().GetRace().PlayerChangingToAnotherRace();
+            player.GetMyPlayer().GetRace().PlayerChangingToAnotherRace();
             SetWcPlayer(player, null);
             _database.SaveClientToDatabase(player);
         }
@@ -354,7 +354,7 @@ namespace MyCsPlugin
             // Server.PrecacheSound("weapons/hegrenade/explode3.wav");
             // Server.PrecacheSound("items/battery_pickup.wav");
 
-            Server.PrintToConsole("Map Load Warcraft\n");
+            Server.PrintToConsole("Map Load My\n");
         }
 
         private void StatusUpdate()
@@ -390,9 +390,9 @@ namespace MyCsPlugin
                 _database.AddNewClientToDatabase(player);
             }
 
-            WarcraftPlayers[player.Handle] = _database.LoadClientFromDatabase(player, XpSystem);
+            MyPlayers[player.Handle] = _database.LoadClientFromDatabase(player, XpSystem);
 
-            Console.WriteLine("Player just connected: " + WarcraftPlayers[player.Handle]);
+            Console.WriteLine("Player just connected: " + MyPlayers[player.Handle]);
         }
 
         private void CommandRaceInfo(CCSPlayerController? client, CommandInfo commandinfo)
@@ -431,15 +431,15 @@ namespace MyCsPlugin
                     _database.SaveClientToDatabase(player);
 
                     // Dont do anything if were already that race.
-                    if (race.InternalName == player.GetWarcraftPlayer().raceName) return;
+                    if (race.InternalName == player.GetMyPlayer().raceName) return;
 
-                    player.GetWarcraftPlayer().GetRace().PlayerChangingToAnotherRace();
-                    player.GetWarcraftPlayer().raceName = race.InternalName;
+                    player.GetMyPlayer().GetRace().PlayerChangingToAnotherRace();
+                    player.GetMyPlayer().raceName = race.InternalName;
 
                     _database.SaveCurrentRace(player);
                     _database.LoadClientFromDatabase(player, XpSystem);
 
-                    player.GetWarcraftPlayer().GetRace().PlayerChangingToRace();
+                    player.GetMyPlayer().GetRace().PlayerChangingToRace();
 
                     player.PlayerPawn.Value.CommitSuicide(false, false);
                 }));
@@ -473,14 +473,14 @@ namespace MyCsPlugin
             base.Unload(hotReload);
         }
 
-        public void ShowSkillPointMenu(WarcraftPlayer wcPlayer)
+        public void ShowSkillPointMenu(MyPlayer wcPlayer)
         {
             var menu = new ChatMenu($"Level up skills ({XpSystem.GetFreeSkillPoints(wcPlayer)} available)");
             var race = wcPlayer.GetRace();
 
             var handler = (CCSPlayerController player, ChatMenuOption option) =>
             {
-                var wcPlayer = player.GetWarcraftPlayer();
+                var wcPlayer = player.GetMyPlayer();
                 var abilityIndex = Convert.ToInt32(option);
 
                 if (XpSystem.GetFreeSkillPoints(wcPlayer) > 0)
@@ -515,7 +515,7 @@ namespace MyCsPlugin
                 var abilityIndex = i;
                 menu.AddMenuOption(displayString, (player, option) =>
                 {
-                    var wcPlayer = player.GetWarcraftPlayer();
+                    var wcPlayer = player.GetMyPlayer();
 
                     if (XpSystem.GetFreeSkillPoints(wcPlayer) > 0)
                         wcPlayer.GrantAbilityLevel(abilityIndex);

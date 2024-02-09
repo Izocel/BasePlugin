@@ -22,7 +22,7 @@ using CounterStrikeSharp.API.Modules.Events;
 
 namespace MyCsPlugin.Races
 {
-    public abstract class WarcraftAbility
+    public abstract class MyAbility
     {
         public abstract string InternalName { get; }
         public abstract string DisplayName { get; }
@@ -33,11 +33,11 @@ namespace MyCsPlugin.Races
         public abstract float Cooldown { get; }
     }
 
-    public class SimpleWarcraftAbility : WarcraftAbility
+    public class SimpleMyAbility : MyAbility
     {
         private Func<int, string> _descriptionGetter;
 
-        public SimpleWarcraftAbility(string internalName, string displayName, Func<int, string> descriptionGetter)
+        public SimpleMyAbility(string internalName, string displayName, Func<int, string> descriptionGetter)
         {
             InternalName = internalName;
             DisplayName = displayName;
@@ -56,7 +56,7 @@ namespace MyCsPlugin.Races
         public override float Cooldown => 0.0f;
     }
 
-    public class SimpleCooldownAbility : SimpleWarcraftAbility
+    public class SimpleCooldownAbility : SimpleMyAbility
     {
         public override float Cooldown { get; }
         public override bool HasCooldown => true;
@@ -68,26 +68,26 @@ namespace MyCsPlugin.Races
         }
     }
 
-    public abstract class WarcraftRace
+    public abstract class MyRace
     {
         public abstract string InternalName { get; }
         public abstract string DisplayName { get; }
 
-        public WarcraftPlayer WarcraftPlayer { get; set; }
+        public MyPlayer MyPlayer { get; set; }
         public CCSPlayerController Player { get; set; }
 
-        private List<WarcraftAbility> _abilities = new List<WarcraftAbility>();
+        private List<MyAbility> _abilities = new List<MyAbility>();
         private Dictionary<string, Action<GameEvent>> _eventHandlers = new();
         private Dictionary<int, Action> _abilityHandlers = new Dictionary<int, Action>();
 
         public abstract void Register();
 
-        public WarcraftAbility GetAbility(int index)
+        public MyAbility GetAbility(int index)
         {
             return _abilities[index];
         }
 
-        protected void AddAbility(WarcraftAbility ability)
+        protected void AddAbility(MyAbility ability)
         {
             _abilities.Add(ability);
         }
@@ -120,13 +120,13 @@ namespace MyCsPlugin.Races
 
         public bool IsAbilityReady(int abilityIndex)
         {
-            return MyCsPlugin.Instance.CooldownManager.IsAvailable(WarcraftPlayer, abilityIndex);
+            return MyCsPlugin.Instance.CooldownManager.IsAvailable(MyPlayer, abilityIndex);
         }
 
         public void StartCooldown(int abilityIndex)
         {
             var ability = _abilities[abilityIndex];
-            MyCsPlugin.Instance.CooldownManager.StartCooldown(WarcraftPlayer, abilityIndex, ability.Cooldown);
+            MyCsPlugin.Instance.CooldownManager.StartCooldown(MyPlayer, abilityIndex, ability.Cooldown);
         }
 
         public void InvokeAbility(int abilityIndex)
@@ -137,7 +137,7 @@ namespace MyCsPlugin.Races
             }
         }
 
-        public void DispatchEffect(WarcraftEffect effect)
+        public void DispatchEffect(MyEffect effect)
         {
             MyCsPlugin.Instance.EffectManager.AddEffect(effect);
         }

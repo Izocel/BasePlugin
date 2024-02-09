@@ -50,17 +50,17 @@ namespace MyCsPlugin.Cooldowns
             }
         }
 
-        public bool IsAvailable(WarcraftPlayer player, int abilityIndex)
+        public bool IsAvailable(MyPlayer player, int abilityIndex)
         {
             return player.AbilityCooldowns[abilityIndex] <= 0.0f;
         }
 
-        public void StartCooldown(WarcraftPlayer player, int abilityIndex, float abilityCooldown)
+        public void StartCooldown(MyPlayer player, int abilityIndex, float abilityCooldown)
         {
             player.AbilityCooldowns[abilityIndex] = abilityCooldown;
         }
 
-        private void PlayEffects(WarcraftPlayer player, int abilityIndex)
+        private void PlayEffects(MyPlayer player, int abilityIndex)
         {
             var ability = player.GetRace().GetAbility(abilityIndex);
 

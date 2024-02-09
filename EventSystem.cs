@@ -43,8 +43,8 @@ namespace MyCsPlugin
             var victim = @event.Userid;
             var attacker = @event.Attacker;
 
-            victim?.GetWarcraftPlayer()?.GetRace()?.InvokeEvent("player_hurt", @event);
-            attacker?.GetWarcraftPlayer()?.GetRace()?.InvokeEvent("player_hurt_other", @event);
+            victim?.GetMyPlayer()?.GetRace()?.InvokeEvent("player_hurt", @event);
+            attacker?.GetMyPlayer()?.GetRace()?.InvokeEvent("player_hurt_other", @event);
             
             return HookResult.Continue;
         }
@@ -52,7 +52,7 @@ namespace MyCsPlugin
         private HookResult PlayerSpawnHandler(EventPlayerSpawn @event, GameEventInfo _)
         {
             var player = @event.Userid;
-            var race = player.GetWarcraftPlayer()?.GetRace();
+            var race = player.GetMyPlayer()?.GetRace();
 
             if (race != null)
             {
@@ -111,8 +111,8 @@ namespace MyCsPlugin
                 attacker.PrintToChat(xpString);
             }
 
-            victim?.GetWarcraftPlayer()?.GetRace()?.InvokeEvent("player_death", @event);
-            attacker?.GetWarcraftPlayer()?.GetRace()?.InvokeEvent("player_kill", @event);
+            victim?.GetMyPlayer()?.GetRace()?.InvokeEvent("player_death", @event);
+            attacker?.GetMyPlayer()?.GetRace()?.InvokeEvent("player_kill", @event);
 
             MyCsPlugin.Instance.EffectManager.ClearEffects(victim);
             

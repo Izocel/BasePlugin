@@ -23,7 +23,7 @@ namespace MyCsPlugin.Races
     public class RaceManager
     {
         private Dictionary<string, Type> _races = new Dictionary<string, Type>();
-        private Dictionary<string, WarcraftRace> _raceObjects = new Dictionary<string, WarcraftRace>();
+        private Dictionary<string, MyRace> _raceObjects = new Dictionary<string, MyRace>();
 
         public void Initialize()
         {
@@ -31,7 +31,7 @@ namespace MyCsPlugin.Races
             RegisterRace<RaceHumanAlliance>();
         }
 
-        private void RegisterRace<T>() where T : WarcraftRace, new()
+        private void RegisterRace<T>() where T : MyRace, new()
         {
             var race = new T();
             race.Register();
@@ -39,22 +39,22 @@ namespace MyCsPlugin.Races
             _raceObjects[race.InternalName] = race;
         }
 
-        public WarcraftRace InstantiateRace(string name)
+        public MyRace InstantiateRace(string name)
         {
             if (!_races.ContainsKey(name)) throw new Exception("Race not found: " + name);
 
-            var race = (WarcraftRace)Activator.CreateInstance(_races[name]);
+            var race = (MyRace)Activator.CreateInstance(_races[name]);
             race.Register();
 
             return race;
         }
 
-        public WarcraftRace[] GetAllRaces()
+        public MyRace[] GetAllRaces()
         {
             return _raceObjects.Values.ToArray();
         }
 
-        public WarcraftRace GetRace(string name)
+        public MyRace GetRace(string name)
         {
             return _raceObjects.ContainsKey(name) ? _raceObjects[name] : null;
         }

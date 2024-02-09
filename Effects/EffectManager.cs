@@ -22,7 +22,7 @@ namespace MyCsPlugin.Effects
 {
     public class EffectManager
     {
-        private List<WarcraftEffect> _effects = new List<WarcraftEffect>();
+        private List<MyEffect> _effects = new List<MyEffect>();
         private float _tickRate = 0.25f;
 
         public void Initialize()
@@ -30,7 +30,7 @@ namespace MyCsPlugin.Effects
             MyCsPlugin.Instance.AddTimer(_tickRate, EffectTick, TimerFlags.REPEAT);
         }
 
-        public void AddEffect(WarcraftEffect effect)
+        public void AddEffect(MyEffect effect)
         {
             _effects.Add(effect);
             effect.OnStart();

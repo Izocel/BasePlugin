@@ -24,7 +24,7 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace MyCsPlugin.Races
 {
-    public class RaceHumanAlliance : WarcraftRace
+    public class RaceHumanAlliance : MyRace
     {
         public override string InternalName => "human_alliance";
         public override string DisplayName => "Human Alliance";
@@ -34,12 +34,12 @@ namespace MyCsPlugin.Races
 
         public override void Register()
         {
-            AddAbility(new SimpleWarcraftAbility("invisibility", "Invisibility",
+            AddAbility(new SimpleMyAbility("invisibility", "Invisibility",
                 i =>
                     $"Every 1 second, you will become invisible for {ChatColors.Green}0.15/0.30/0.45/0.60/0.75{ChatColors.Default} seconds"));
-            AddAbility(new SimpleWarcraftAbility("devotion", "Devotion",
+            AddAbility(new SimpleMyAbility("devotion", "Devotion",
                 i => $"Spawn with an extra {ChatColors.Yellow}10/20/30/40/50{ChatColors.Default} HP."));
-            AddAbility(new SimpleWarcraftAbility("freeze", "Freeze",
+            AddAbility(new SimpleMyAbility("freeze", "Freeze",
                 i =>
                     $"When you hit an enemy, there is a {ChatColors.Blue}5/10/15/20/25%{ChatColors.Default} chance you will freeze them in place for 1 second."));
             AddAbility(new SimpleCooldownAbility("dash", "Dash",
@@ -56,7 +56,7 @@ namespace MyCsPlugin.Races
 
         private void Ultimate()
         {
-            if (WarcraftPlayer.GetAbilityLevel(3) < 1) return;
+            if (MyPlayer.GetAbilityLevel(3) < 1) return;
 
             if (IsAbilityReady(3))
             {
@@ -91,7 +91,7 @@ namespace MyCsPlugin.Races
             if (!@event.Userid.IsValid || !@event.Userid.PawnIsAlive) return;
 
             double rolledValue = new Random().NextDouble();
-            float chanceToStun = WarcraftPlayer.GetAbilityLevel(2) * 0.05f;
+            float chanceToStun = MyPlayer.GetAbilityLevel(2) * 0.05f;
 
             if (rolledValue < chanceToStun)
             {
@@ -102,14 +102,14 @@ namespace MyCsPlugin.Races
 
         private void PlayerSpawn(GameEvent obj)
         {
-            Player.PlayerPawn.Value.Health = 100 + (10 * WarcraftPlayer.GetAbilityLevel(1));
+            Player.PlayerPawn.Value.Health = 100 + (10 * MyPlayer.GetAbilityLevel(1));
 
             if (_invisiblityTimer != null)
             {
                 _invisiblityTimer.Kill();
             }
 
-            _invisiblityTimer = MyCsPlugin.Instance.AddTimer(WarcraftPlayer.GetAbilityLevel(0) * 0.15f,
+            _invisiblityTimer = MyCsPlugin.Instance.AddTimer(MyPlayer.GetAbilityLevel(0) * 0.15f,
                 ToggleInvisiblity, TimerFlags.REPEAT);
 
 
@@ -166,7 +166,7 @@ namespace MyCsPlugin.Races
         }
     }
 
-    public class FreezeEffect : WarcraftEffect
+    public class FreezeEffect : MyEffect
     {
         public FreezeEffect(CCSPlayerController owner, CCSPlayerController target, float duration) : base(owner, target,
             duration)
@@ -175,7 +175,7 @@ namespace MyCsPlugin.Races
 
         public override void OnStart()
         {
-            Target.GetWarcraftPlayer()?.SetStatusMessage($"{ChatColors.Blue}[FROZEN]{ChatColors.Default}", Duration);
+            Target.GetMyPlayer()?.SetStatusMessage($"{ChatColors.Blue}[FROZEN]{ChatColors.Default}", Duration);
             // Target.MoveType = MoveType.MOVETYPE_NONE;
             // Target.RenderMode = RenderMode.RENDER_TRANSCOLOR;
             // Target.Color = Color.FromArgb(255, 50, 50, 255);
