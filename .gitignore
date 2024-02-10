@@ -151,6 +151,7 @@ server/steam/cs2-dedicated/steamapps
 server/steam/cs2-dedicated/pressure-vessel
 server/steam/cs2-dedicated/sniper*
 
-!server/steam/cs2-dedicated/
-!server/steam/cs2-dedicated/cfg/
-!server/steam/cs2-dedicated/addons/
+!server/steam/cs2-dedicated/game
+!server/steam/cs2-dedicated/game/csgo
+!server/steam/cs2-dedicated/game/csgo/cfg
+!server/steam/cs2-dedicated/game/csgo/addons
