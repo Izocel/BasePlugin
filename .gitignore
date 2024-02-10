@@ -11,7 +11,6 @@
 [Dd]ebug/
 [Rr]elease/
 x64/
-[Bb]in/
 [Oo]bj/
 
 # MSTest test Results
@@ -154,18 +153,17 @@ server/steam/cs2-dedicated/sniper*
 !server/steam/cs2-dedicated
 !server/steam/cs2-dedicated/game
 server/steam/cs2-dedicated/game/*.*
+server/steam/cs2-dedicated/game/bin
 server/steam/cs2-dedicated/game/core
 server/steam/cs2-dedicated/game/csgo_core
 server/steam/cs2-dedicated/game/csgo_imported
 server/steam/cs2-dedicated/game/csgo_lv
 
 server/steam/cs2-dedicated/game/csgo/*.*
+server/steam/cs2-dedicated/game/csgo/bin
 server/steam/cs2-dedicated/game/csgo/maps
 server/steam/cs2-dedicated/game/csgo/panorama
 server/steam/cs2-dedicated/game/csgo/resource
 !server/steam/cs2-dedicated/game/csgo
 !server/steam/cs2-dedicated/game/csgo/cfg
 !server/steam/cs2-dedicated/game/csgo/addons
-
-
-server/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.pdb
