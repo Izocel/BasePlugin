@@ -54,9 +54,9 @@ docker volume create --name $CONTNAME-USER --opt type=none --opt device="$VOLPAT
 docker volume create --name $CONTNAME-STEAM --opt type=none --opt device="$VOLPATH/steam" --opt o=bind
 
 echo ""
-docker run -it -d --name="SteamCMD" -v "$CONTNAME-STEAM:/home/steam/" cm2network/steamcmd
-docker exec -it "steamcmd_login" sh -c "chmod 755 /home/steam/steamcmd/steamcmd.sh && /home/steam/steamcmd/steamcmd.sh +login $STEAMUSER $STEAMPASS +quit"
-docker stop steamcmd_login && docker rm steamcmd_login
+docker run -it -d --name="SteamCMD" -v "SteamCMD:/home/steam/Steam" cm2network/steamcmd
+docker exec -it "SteamCMD" sh -c "chmod 755 /home/steam/steamcmd/steamcmd.sh && /home/steam/steamcmd/steamcmd.sh +login $STEAMUSER $STEAMPASS +quit"
+docker stop SteamCMD && docker rm SteamCMD
 
 echo ""
 read -p "Steam cmd login OK (y/n)?" CONT
@@ -68,10 +68,10 @@ fi
 echo ""
 echo "Creating cs2 server container..."
 docker run -it -d --net=bridge -p $GPORT:$GPORT/tcp -p $GPORT:$GPORT/udp -p $TPORT:$TPORT/tcp -p $TPORT:$TPORT/udp \
+    --name="$CONTNAME" \
     -v "$CONTNAME-USER:/usr/" \
     -v "$CONTNAME-STEAM:/home/steam/" \
-    -v "steamcmd_login_volume:/home/steam/Steam" \
-    --name="$CONTNAME" \
+    -v "SteamCMD:/home/steam/Steam" \
     -e STEAMUSER=$STEAMUSER \
     -e CS2_RCONPW=$RNDPASS \
     -e CS2_PW=$RNDPASS2 \
