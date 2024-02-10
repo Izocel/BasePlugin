@@ -146,12 +146,24 @@ server/steam/*
 !server/steam/entry.sh
 
 server/steam/cs2-dedicated/*.*
+server/steam/cs2-dedicated/_*
 server/steam/cs2-dedicated/run*
 server/steam/cs2-dedicated/steamapps
 server/steam/cs2-dedicated/pressure-vessel
 server/steam/cs2-dedicated/sniper*
 
+!server/steam/cs2-dedicated
 !server/steam/cs2-dedicated/game
+server/steam/cs2-dedicated/game/*.*
+server/steam/cs2-dedicated/game/core
+server/steam/cs2-dedicated/game/csgo_core
+server/steam/cs2-dedicated/game/csgo_imported
+server/steam/cs2-dedicated/game/csgo_lv
+
+server/steam/cs2-dedicated/game/csgo/*.*
+server/steam/cs2-dedicated/game/csgo/maps
+server/steam/cs2-dedicated/game/csgo/panorama
+server/steam/cs2-dedicated/game/csgo/resource
 !server/steam/cs2-dedicated/game/csgo
 !server/steam/cs2-dedicated/game/csgo/cfg
 !server/steam/cs2-dedicated/game/csgo/addons
