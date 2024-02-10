@@ -1,4 +1,6 @@
-﻿using System;
+﻿// https://docs.cssharp.dev/docs/guides/getting-started.html
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyCsPlugin.Cooldowns;
