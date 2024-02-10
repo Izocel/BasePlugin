@@ -207,7 +207,7 @@ namespace MyCsPlugin
         private static MyCsPlugin _instance;
         public static MyCsPlugin Instance => _instance;
 
-        public override string ModuleName => "My";
+        public override string ModuleName => "MyCsPlugin";
         public override string ModuleVersion => "0.0.1";
 
         public static int MaxLevel = 16;
@@ -356,7 +356,7 @@ namespace MyCsPlugin
             // Server.PrecacheSound("weapons/hegrenade/explode3.wav");
             // Server.PrecacheSound("items/battery_pickup.wav");
 
-            Server.PrintToConsole("Map Load My\n");
+            Server.PrintToConsole("Map Load MyCsPlugin\n");
         }
 
         private void StatusUpdate()
