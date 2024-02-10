@@ -136,4 +136,16 @@ _NCrunch*
 # Custom
 # =========================
 .history
-server
+
+# =========================
+# CS-Server
+# =========================
+server/*
+server/steam/*
+!server/steam/
+!server/steam/entry.sh
+
+!server/steam/cs2-dedicated/
+server/steam/cs2-dedicated/steamapps
+!server/steam/cs2-dedicated/cfg/
+!server/steam/cs2-dedicated/addons/

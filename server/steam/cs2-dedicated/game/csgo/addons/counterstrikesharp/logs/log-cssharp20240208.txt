@@ -1,0 +1,7 @@
+2024-02-08 13:35:38.468 +00:00 [INFO] (cssharp:Core) CounterStrikeSharp is starting up...
+2024-02-08 13:35:38.623 +00:00 [INFO] (cssharp:CoreConfig) Successfully loaded core configuration
+2024-02-08 13:35:38.646 +00:00 [INFO] (cssharp:GameDataProvider) Successfully loaded 31 game data entries from /home/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/gamedata/gamedata.json
+2024-02-08 13:35:38.650 +00:00 [INFO] (cssharp:Core) Loading Admins from /home/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/configs/admins.json
+2024-02-08 13:35:38.652 +00:00 [WARN] (cssharp:AdminManager) Admin data file not found. Skipping admin data load.
+2024-02-08 13:35:38.652 +00:00 [INFO] (cssharp:Core) Loading Admin Groups from /home/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/configs/admin_groups.json
+2024-02-08 13:35:38.653 +00:00 [INFO] (cssharp:Core) Loading Admin Command Overrides from /home/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/configs/admin_overrides.json
