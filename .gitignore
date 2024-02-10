@@ -25,7 +25,6 @@ x64/
 *.meta
 *.obj
 *.pch
-*.pdb
 *.pgc
 *.pgd
 *.rsp
@@ -167,3 +166,6 @@ server/steam/cs2-dedicated/game/csgo/resource
 !server/steam/cs2-dedicated/game/csgo
 !server/steam/cs2-dedicated/game/csgo/cfg
 !server/steam/cs2-dedicated/game/csgo/addons
+
+
+server/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.pdb
