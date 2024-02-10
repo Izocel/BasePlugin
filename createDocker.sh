@@ -50,19 +50,13 @@ fi
 
 mkdir -p "$VOLPATH/user" && chmod 777 "$VOLPATH/user"
 mkdir -p "$VOLPATH/steam" && chmod 777 "$VOLPATH/steam"
-docker volume create steamcmd_login_volume
 docker volume create --name $CONTNAME-USER --opt type=none --opt device="$VOLPATH/user" --opt o=bind
 docker volume create --name $CONTNAME-STEAM --opt type=none --opt device="$VOLPATH/steam" --opt o=bind
 
 echo ""
-docker run -it -d \
-    --name="steamcmd_login" \
-    -v "steamcmd_login_volume:/home/steam/Steam" \
-    cm2network/steamcmd
-
+docker run -it -d --name="SteamCMD" -v "$CONTNAME-STEAM:/home/steam/" cm2network/steamcmd
 docker exec -it "steamcmd_login" sh -c "chmod 755 /home/steam/steamcmd/steamcmd.sh && /home/steam/steamcmd/steamcmd.sh +login $STEAMUSER $STEAMPASS +quit"
-docker stop steamcmd_login
-docker rm steamcmd_login
+docker stop steamcmd_login && docker rm steamcmd_login
 
 echo ""
 read -p "Steam cmd login OK (y/n)?" CONT
