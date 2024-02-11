@@ -52,6 +52,8 @@ namespace MyCsPlugin
                 `ability4level` TINYINT NULL DEFAULT 0,
                 PRIMARY KEY (`steamid`, `racename`));"
             );
+
+            Server.PrintToConsole("\nSQLite Initialization complete\n");
         }
 
         public bool ClientExistsInDatabase(ulong steamid)
