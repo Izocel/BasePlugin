@@ -18,7 +18,6 @@ using System;
 using System.IO;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
-using CounterStrikeSharp.API.Modules.Entities;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -31,29 +30,28 @@ namespace MyCsPlugin
         public void Initialize(string directory)
         {
             _connection =
-                new SqliteConnection(
-                    $"Data Source={Path.Join(directory, "database.db")}");
+                new SqliteConnection($"Data Source={Path.Join(directory, "database.db")}");
 
             _connection.Execute(@"
-CREATE TABLE IF NOT EXISTS `players` (
-	`steamid` UNSIGNED BIG INT NOT NULL,
-	`currentRace` VARCHAR(32) NOT NULL DEFAULT 'undead_scourge',
-  `name` VARCHAR(64),
-	PRIMARY KEY (`steamid`));");
+            CREATE TABLE IF NOT EXISTS `players` (
+                `steamid` UNSIGNED BIG INT NOT NULL,
+                `currentRace` VARCHAR(32) NOT NULL DEFAULT 'undead_scourge',
+            `name` VARCHAR(64),
+                PRIMARY KEY (`steamid`));");
 
             _connection.Execute(@"
-CREATE TABLE IF NOT EXISTS `raceinformation` (
-  `steamid` UNSIGNED BIG INT NOT NULL,
-  `racename` VARCHAR(32) NOT NULL,
-  `currentXP` INT NULL DEFAULT 0,
-  `currentLevel` INT NULL DEFAULT 1,
-  `amountToLevel` INT NULL DEFAULT 100,
-  `ability1level` TINYINT NULL DEFAULT 0,
-  `ability2level` TINYINT NULL DEFAULT 0,
-  `ability3level` TINYINT NULL DEFAULT 0,
-  `ability4level` TINYINT NULL DEFAULT 0,
-  PRIMARY KEY (`steamid`, `racename`));
-");
+                CREATE TABLE IF NOT EXISTS `raceinformation` (
+                `steamid` UNSIGNED BIG INT NOT NULL,
+                `racename` VARCHAR(32) NOT NULL,
+                `currentXP` INT NULL DEFAULT 0,
+                `currentLevel` INT NULL DEFAULT 1,
+                `amountToLevel` INT NULL DEFAULT 100,
+                `ability1level` TINYINT NULL DEFAULT 0,
+                `ability2level` TINYINT NULL DEFAULT 0,
+                `ability3level` TINYINT NULL DEFAULT 0,
+                `ability4level` TINYINT NULL DEFAULT 0,
+                PRIMARY KEY (`steamid`, `racename`));"
+            );
         }
 
         public bool ClientExistsInDatabase(ulong steamid)
@@ -125,13 +123,13 @@ CREATE TABLE IF NOT EXISTS `raceinformation` (
             }
 
             _connection.Execute(@"
-UPDATE `raceinformation` SET `currentXP` = @currentXp,
- `currentLevel` = @currentLevel,
- `ability1level` = @ability1Level,
- `ability2level` = @ability2Level,
- `ability3level` = @ability3Level,
- `ability4level` = @ability4Level,
- `amountToLevel` = @amountToLevel WHERE `steamid` = @steamid AND `racename` = @racename;",
+                    UPDATE `raceinformation` SET `currentXP` = @currentXp,
+                    `currentLevel` = @currentLevel,
+                    `ability1level` = @ability1Level,
+                    `ability2level` = @ability2Level,
+                    `ability3level` = @ability3Level,
+                    `ability4level` = @ability4Level,
+                    `amountToLevel` = @amountToLevel WHERE `steamid` = @steamid AND `racename` = @racename;",
                 new
                 {
                     currentXp = wcPlayer.currentXp,
@@ -152,7 +150,7 @@ UPDATE `raceinformation` SET `currentXP` = @currentXp,
             foreach (var player in playerEntities)
             {
                 if (!player.IsValid) continue;
-                
+
                 var wcPlayer = MyCsPlugin.Instance.GetWcPlayer(player);
                 if (wcPlayer == null) continue;
 
