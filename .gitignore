@@ -168,3 +168,5 @@ server/steam/cs2-dedicated/game/csgo/resource
 !server/steam/cs2-dedicated/game/csgo/cfg
 !server/steam/cs2-dedicated/game/csgo/addons
 !server/steam/cs2-dedicated/game/csgo/gameinfo.gi
+
+server/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/plugins/MyCsPlugin
