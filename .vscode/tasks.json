@@ -9,7 +9,9 @@
                 "build",
                 "${workspaceFolder}/MyCsPlugin.sln",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+                "/consoleloggerparameters:NoSummary;ForceNoAlign",
+                "-o",
+                "${workspaceFolder}\\server\\steam\\cs2-dedicated\\game\\csgo\\addons\\counterstrikesharp\\plugins\\MyCsPlugin"
             ],
             "problemMatcher": "$msCompile"
         },
