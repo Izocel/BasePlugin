@@ -48,21 +48,46 @@
             "problemMatcher": "$msCompile"
         },
         {
-			"type": "shell",
-			"label": "Launch win64",
-			"command": "call ..\\servers\\windows\\entry.bat",
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": false,
-				"clear": false
-			},
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			}
-		},
+            "type": "shell",
+            "label": "Launch win64-server",
+            "command": "\"D:/steam/steamapps/common/Counter-Strike Global Offensive/game/bin/win64/cs2.exe\"",
+            "args": [
+                "-dedicated",
+                "-dev",
+                "-console",
+                "+sv_lan", "0",
+                "+hostname", "'CS2-TestServer'",
+                "+map", "de_nuke"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Launch win64-client",
+            "command": "\"D:/steam/steamapps/common/Counter-Strike Global Offensive/game/bin/win64/cs2.exe\"",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ]
 }
