@@ -176,34 +176,34 @@ server/linux/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/plugins/MyC
 # Windows CS-Server
 # =========================
 server/windows/*
-server/windows/steam/*
-!server/windows/steam/
-!server/windows/steam/entry.sh
+server/windows/*
+!server/windows/
+!server/windows/entry.bat
 
-server/windows/steam/cs2-dedicated/*.*
-server/windows/steam/cs2-dedicated/_*
-server/windows/steam/cs2-dedicated/run*
-server/windows/steam/cs2-dedicated/steamapps
-server/windows/steam/cs2-dedicated/pressure-vessel
-server/windows/steam/cs2-dedicated/sniper*
+server/windows/cs2-dedicated/*.*
+server/windows/cs2-dedicated/_*
+server/windows/cs2-dedicated/run*
+server/windows/cs2-dedicated/steamapps
+server/windows/cs2-dedicated/pressure-vessel
+server/windows/cs2-dedicated/sniper*
 
-!server/windows/steam/cs2-dedicated
-!server/windows/steam/cs2-dedicated/game
-server/windows/steam/cs2-dedicated/game/*.*
-server/windows/steam/cs2-dedicated/game/bin
-server/windows/steam/cs2-dedicated/game/core
-server/windows/steam/cs2-dedicated/game/csgo_core
-server/windows/steam/cs2-dedicated/game/csgo_imported
-server/windows/steam/cs2-dedicated/game/csgo_lv
+!server/windows/cs2-dedicated
+!server/windows/cs2-dedicated/game
+server/windows/cs2-dedicated/game/*.*
+server/windows/cs2-dedicated/game/bin
+server/windows/cs2-dedicated/game/core
+server/windows/cs2-dedicated/game/csgo_core
+server/windows/cs2-dedicated/game/csgo_imported
+server/windows/cs2-dedicated/game/csgo_lv
 
-server/windows/steam/cs2-dedicated/game/csgo/*.*
-server/windows/steam/cs2-dedicated/game/csgo/bin
-server/windows/steam/cs2-dedicated/game/csgo/maps
-server/windows/steam/cs2-dedicated/game/csgo/panorama
-server/windows/steam/cs2-dedicated/game/csgo/resource
-!server/windows/steam/cs2-dedicated/game/csgo
-!server/windows/steam/cs2-dedicated/game/csgo/cfg
-!server/windows/steam/cs2-dedicated/game/csgo/addons
-!server/windows/steam/cs2-dedicated/game/csgo/gameinfo.gi
+server/windows/cs2-dedicated/game/csgo/*.*
+server/windows/cs2-dedicated/game/csgo/bin
+server/windows/cs2-dedicated/game/csgo/maps
+server/windows/cs2-dedicated/game/csgo/panorama
+server/windows/cs2-dedicated/game/csgo/resource
+!server/windows/cs2-dedicated/game/csgo
+!server/windows/cs2-dedicated/game/csgo/cfg
+!server/windows/cs2-dedicated/game/csgo/addons
+!server/windows/cs2-dedicated/game/csgo/gameinfo.gi
 
-server/windows/steam/cs2-dedicated/game/csgo/addons/counterstrikesharp/plugins/MyCsPlugin
+server/windows/cs2-dedicated/game/csgo/addons/counterstrikesharp/plugins/MyCsPlugin
