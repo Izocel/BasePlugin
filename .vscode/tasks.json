@@ -50,7 +50,7 @@
         {
 			"type": "shell",
 			"label": "Launch win64",
-			"command": "call .\\server\\windows\\entry.bat",
+			"command": "call ..\\servers\\windows\\entry.bat",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
